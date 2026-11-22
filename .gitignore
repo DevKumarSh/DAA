@@ -1,0 +1,7 @@
+# Compiled binaries
+*.exe
+*.o
+*.obj
+
+# Debug / IDE
+.vscode/
