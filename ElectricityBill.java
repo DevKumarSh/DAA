@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 class InvalidReadingException extends Exception {
     InvalidReadingException(String msg) {
@@ -9,10 +9,9 @@ class InvalidReadingException extends Exception {
 
 public class ElectricityBill extends JFrame implements ActionListener {
 
-    JLabel l1, l2, l3;
-    JTextField t1, t2, t3;
+    JLabel l1, l2, l3, l4, l5;
+    JTextField t1, t2, t3, t4, t5;
     JButton b1;
-    JTextArea result;
 
     ElectricityBill() {
 
@@ -44,13 +43,27 @@ public class ElectricityBill extends JFrame implements ActionListener {
         t3.setBounds(160, 130, 180, 30);
         add(t3);
 
-        b1 = new JButton("Calculate Bill");
-        b1.setBounds(120, 180, 150, 35);
-        add(b1);
+        l4 = new JLabel("Units Consumed:");
+        l4.setBounds(30, 180, 120, 30);
+        add(l4);
 
-        result = new JTextArea();
-        result.setBounds(30, 230, 310, 150);
-        add(result);
+        t4 = new JTextField();
+        t4.setBounds(160, 180, 180, 30);
+        t4.setEditable(false);
+        add(t4);
+
+        l5 = new JLabel("Total Bill:");
+        l5.setBounds(30, 230, 120, 30);
+        add(l5);
+
+        t5 = new JTextField();
+        t5.setBounds(160, 230, 180, 30);
+        t5.setEditable(false);
+        add(t5);
+
+        b1 = new JButton("Calculate Bill");
+        b1.setBounds(120, 290, 150, 35);
+        add(b1);
 
         b1.addActionListener(this);
 
@@ -77,32 +90,31 @@ public class ElectricityBill extends JFrame implements ActionListener {
 
             if (units <= 100) {
                 bill = units * 2;
-            } else if (units <= 200) {
+            }
+            else if (units <= 200) {
                 bill = 100 * 2 + (units - 100) * 3;
-            } else {
+            }
+            else {
                 bill = 100 * 2 + 100 * 3
                        + (units - 200) * 5;
             }
 
-            result.setText(
-                "Consumer Name: " + name +
-                "\nUnits Consumed: " + units +
-                "\nTotal Bill: Rs. " + bill
-            );
+            t4.setText(String.valueOf(units));
+            t5.setText("Rs. " + bill);
 
-        } catch (InvalidReadingException ex) {
+            System.out.println("Consumer Name: " + name);
+            System.out.println("Units Consumed: " + units);
+            System.out.println("Total Bill: Rs. " + bill);
 
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-
-        } catch (NumberFormatException ex) {
-
-            JOptionPane.showMessageDialog(this,
-                "Please enter valid meter readings!");
-
-        } catch (Exception ex) {
-
-            JOptionPane.showMessageDialog(this,
-                "Something went wrong!");
+        }
+        catch (InvalidReadingException ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        catch (NumberFormatException ex) {
+            System.out.println("Exception: Please enter valid readings!");
+        }
+        catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
         }
     }
 
